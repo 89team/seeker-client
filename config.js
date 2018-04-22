@@ -9,13 +9,21 @@ var knownOptions = {
 
 var port = 3000;
 //开发环境
-var rootPath = 'http://localhost:5000';
+var rootPath = 'http://192.168.199.154:5000';
 var options = minimist(process.argv.slice(2), knownOptions);
 
 //定义发布页面输出rootPath
 if(options.env === 'production'){
-	rootPath = 'http://localhost:4000';
+	rootPath = 'http://89team.com';
 }
+
+const shopsList = [
+	'王者荣耀',
+	'英雄联盟',
+	'吃鸡手游',
+	'夏日女装',
+	'首页面'
+];
 
 /**
  * [项目配置信息]
@@ -27,5 +35,6 @@ module.exports = {
     'port': options.env === 'ie' ? 5000 : 3000,
     'projectName': 'server',
     'rootPath': rootPath,
-    'globalConfig': options
+    'globalConfig': options,
+    'shopsList': shopsList
 }

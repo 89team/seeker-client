@@ -1,12 +1,14 @@
 var express = require('express'),
     rootPath = require('../config').rootPath,
+    rootData = require('../client-data'),
     router = express.Router();
 
 
 function getConfig(req ,params){
     var config = {
-        menuId: req.query.m,
-        rootPath: rootPath
+        rootData: rootData,
+        rootPath: rootPath,
+        data: rootData['热门产品']
     }
 
     return Object.assign({} , config ,params || {});
@@ -14,14 +16,17 @@ function getConfig(req ,params){
 
 //首页
 router.get('/', function(req, res, next) {
-    //res.redirect('/login'); //重定向到登录页
-    res.render('index', getConfig(req));
+    res.render('index', getConfig(req , {
+        name: '热门产品',
+
+    }));
 });
 
 //用户页面
 router.get('/pages/team/index.html', function(req, res, next) {
-    console.log(123);
-    res.render('pages/team/index', getConfig(req));
+    res.render('pages/team/index', getConfig(req , {
+        name: '吃鸡游戏'
+    }));
 });
 
 module.exports = router;

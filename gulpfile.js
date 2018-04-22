@@ -11,7 +11,7 @@ var gulp = require('gulp'),
     base64 = require('gulp-base64'), //图片转换base64
     gulpEjs = require('gulp-ejs'), //模版引擎
     runSequence = require('run-sequence'),//执行任务顺序插件
-    del     = require('del');       //删除文件
+    del     = require('del');
 
 
 var reload = browserSync.reload;
@@ -79,36 +79,8 @@ gulp.task('static', function() {
         }))
         .pipe(gulp.dest(path.join(STATICDIR)));
 });
-//把小于8k的png图片转换成base64
-gulp.task('imageBase64', function() {
-    return gulp.src(FLIEPATHS.css)
-        .pipe(base64({
-            extensions: ['svg', 'png', /\.jpg#datauri$/i],
-            maxImageSize: 8 * 1024, // bytes 
-        }))
-        .pipe(gulp.dest(path.join(STATICDIR, 'css')));
-});
 
-//压缩css
-gulp.task('cssmin', function() {
-    return gulp.src(path.join(STATICDIR, 'css/main.css'))
-        .pipe(cssnano())
-        .pipe(rename({
-            suffix: '.min'
-        }))
-        .pipe(gulp.dest(path.join(STATICDIR, 'css')));
-});
-//压缩js
-gulp.task('jsmin', function() {
-    var selfPath = [FLIEPATHS.js, "!static/js/**/*.min.js"];
-    return gulp.src(selfPath)
-        //排除混淆关键字
-        .pipe(uglify({ mangle: { except: ['require', 'exports', 'module', '$'] } }))
-        .pipe(rename({
-            suffix: '.min'
-        }))
-        .pipe(gulp.dest(path.join(STATICDIR, 'js')));
-});
+
 
 //普通发布
 gulp.task('build', (cd)=>{
